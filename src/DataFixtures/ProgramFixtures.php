@@ -11,49 +11,69 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
     public const PROGRAMS =[
         [
-            'title' => 'Fun with Dick and Jane',
-            'synopsis' => 'Lorsqu\'un couple aisé perd tout son argent à la suite d\'une série de gaffes, il se tourne vers une vie de crime pour joindre les deux bouts.',
+            'title' => 'The Boys',
+            'synopsis' => 'Une histoire d\'action centrée sur une équipe de la CIA chargée de maintenir les super-héros en ligne, par tous les moyens nécessaires.',
             'reference' => 'category_Action',
         ],
         [
-            'title' => 'Me, Myself & Irene',
-            'synopsis' => 'Un gentil flic atteint d\'un trouble dissociatif de l\'identité doit protéger une femme en fuite d\'un ex-petit ami corrompu et de ses associés.',
+            'title' => 'Vikings',
+            'synopsis' => 'Vikings nous transporte dans le monde brutal et mystérieux de Ragnar Lothbrok, un guerrier et fermier viking qui aspire à explorer (et à attaquer) les rives lointaines au large de l\'océan.',
             'reference' => 'category_Aventure',
         ],
         [
-            'title' => 'How the Grinch Stole Christmas',
-            'synopsis' => 'À la périphérie de Whoville vit un Grinch vert et vengeur qui prévoit de gâcher Noël pour tous les citoyens de la ville.',
+            'title' => 'South Park',
+            'synopsis' => 'Suit les mésaventures de quatre collégiens insolents dans la ville tranquille et dysfonctionnelle de South Park dans le Colorado.',
             'reference' => 'category_Animation',
         ],
         [
-            'title' => 'Man on the Moon',
-            'synopsis' => 'The life and career of legendary comedian Andy Kaufman.',
+            'title' => 'The Crown',
+            'synopsis' => 'Suit les rivalités politiques et l\'histoire du règne de la reine Elizabeth II et les événements qui ont marqué la seconde moitié du XXème siècle.',
             'reference' => 'category_Biographique',
         ],
         [
-            'title' => 'Ace Ventura: Pet Detective',
-            'synopsis' => 'Détective spécialisé dans la recherche d\'animaux perdus, Ace Ventura habite un appartement devenu une véritable arche de Noé où se côtoient caméléon, perroquet, canari et mouffette.',
+            'title' => 'Seinfeld',
+            'synopsis' => 'Les mésaventures continues de Jerry Seinfeld, humoriste névrosé et de ses amis new-yorkais.',
             'reference' => 'category_Comedie',
         ],
         [
-            'title' => 'The Majestic',
-            'synopsis' => 'En 1951, un écrivain hollywoodien mis à l\'index a un accident de voiture, perd la mémoire et s\'installe dans une petite ville où il est pris pour un fils perdu depuis longtemps.',
+            'title' => 'Planet Earth',
+            'synopsis' => 'Récompensée par un Emmy Award, onze épisodes, cinq ans de préparation, la série documentaire sur la nature la plus chère jamais commandée par la BBC et la première à être filmée en haute définition.',
+            'reference' => 'category_Documentaire',
+        ],
+        [
+            'title' => 'Mad Men',
+            'synopsis' => 'Un drame sur l\'une des agences de publicité les plus prestigieuses de New York au début des années 1960, mettant l\'accent sur Donald Draper, l\'un des directeurs de publicité les plus mystérieux mais extrêmement talentueux.',
             'reference' => 'category_Drame',
         ],
         [
-            'title' => 'Eternal Sunshine of the Spotless Mind',
-            'synopsis' => 'Lorsque leur relation tourne au vinaigre, un couple subit une intervention médicale pour s\'effacer à jamais de leur mémoire.',
+            'title' => 'Twin Peaks',
+            'synopsis' => 'Un agent du FBI singulier enquête sur le meurtre d\'une jeune femme dans la ville encore plus singulière de Twin Peaks.',
             'reference' => 'category_Fantastique',
         ],
         [
-            'title' => 'The Number 23',
-            'synopsis' => 'Walter Sparrow devient obsédé par un roman qui, selon lui, a été écrit sur lui, alors que de plus en plus de similitudes entre lui et son alter ego littéraire semblent surgir.',
+            'title' => 'Chernobyl',
+            'synopsis' => 'En avril 1986, une explosion à la centrale nucléaire de Tchernobyl en URSS, devient l\'une des pires catastrophes causées par l\'homme au monde.',
+            'reference' => 'category_Historique',
+        ],
+        [
+            'title' => 'Stranger Things',
+            'synopsis' => 'Lorsqu\'un jeune garçon disparaît, sa mère, le chef de police et ses amis doivent affronter des forces terrifiantes afin de le retrouver.',
             'reference' => 'category_Horreur',
         ],
         [
-            'title' => 'Batman Forever',
-            'synopsis' => 'Batman doit combattre l\'ancien procureur de district Harvey Dent, qui est maintenant Two-Face et Edward Nygma, The Riddler avec l\'aide d\'un psychologue amoureux et d\'un jeune acrobate de cirque qui devient son acolyte, Robin.',
+            'title' => 'Melrose Place',
+            'synopsis' => 'La série classique d\'un groupe d\'amis vivant à Melrose Place, en Californie.',
             'reference' => 'category_Merde',
+        ],
+        [
+            'title' => 'True Detective',
+            'synopsis' => 'Série dans laquelle les enquêtes policières dénichent les secrets personnels et professionnels des personnes impliquées dans la loi ou non.',
+            'reference' => 'category_Policier',
+        ],
+        [
+            'title' => 'The Expanse',
+            'synopsis' => 'L\'état fragile de guerre froide du système solaire est menacé alors qu\'une vaste conspiration est lentement découverte.',
+            'reference' => 'category_Science-fiction',
         ],
     ];
 
