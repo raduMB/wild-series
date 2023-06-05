@@ -14,10 +14,14 @@ class CategoryFixtures extends Fixture
         'Animation',
         'Biographique',
         'Comedie',
+        'Documentaire',
         'Drame',
         'Fantastique',
+        'Historique',
         'Horreur',
         'Merde',
+        'Policier',
+        'Science-fiction'
     ];
 
     public function load(ObjectManager $manager)
