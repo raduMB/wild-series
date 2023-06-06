@@ -21,7 +21,8 @@ class CategoryFixtures extends Fixture
         'Horreur',
         'Merde',
         'Policier',
-        'Science-fiction'
+ 10_recuperer_des_donnees_stockees
+        'Science-fiction',
     ];
 
     public function load(ObjectManager $manager)
