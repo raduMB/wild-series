@@ -21,7 +21,6 @@ class CategoryFixtures extends Fixture
         'Horreur',
         'Merde',
         'Policier',
- 10_recuperer_des_donnees_stockees
         'Science-fiction',
     ];
 
