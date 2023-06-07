@@ -29,7 +29,7 @@ class Season
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(mappedBy: 'season', targetEntity: Episode::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'season', targetEntity: Episode::class)]
     private Collection $episodes;
 
     public function __construct()
@@ -42,12 +42,12 @@ class Season
         return $this->id;
     }
 
-    public function getProgram(): ?program
+    public function getProgram(): ?Program
     {
         return $this->program;
     }
 
-    public function setProgram(?program $program): self
+    public function setProgram(?Program $program): self
     {
         $this->program = $program;
 

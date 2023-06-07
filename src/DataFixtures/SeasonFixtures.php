@@ -2,89 +2,35 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\Season;
+use App\DataFixtures\ProgramFixtures;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Persistence\ObjectManager;
 
 class SeasonFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const SEASONS =[
-        [
-            'reference' => 'program_The Boys',
-            'number' => '1',
-            'year' => '2019',
-            'description' => 'First Season',
-        ],
-        [
-            'reference' => 'program_The Boys',
-            'number' => '2',
-            'year' => '2020',
-            'description' => 'Second Season',
-        ],
-        [
-            'reference' => 'program_The Boys',
-            'number' => '3',
-            'year' => '2022',
-            'description' => 'Third Season',
-        ],
-        [
-            'reference' => 'program_Vikings',
-            'number' => '1',
-            'year' => '2013',
-            'description' => 'First Season',
-        ],
-        [
-            'reference' => 'program_Vikings',
-            'number' => '2',
-            'year' => '2014',
-            'description' => 'Second Season',
-        ],
-        [
-            'reference' => 'program_Vikings',
-            'number' => '3',
-            'year' => '2015',
-            'description' => 'Third Season',
-        ],
-        [
-            'reference' => 'program_South Park',
-            'number' => '1',
-            'year' => '1997',
-            'description' => 'First Season',
-        ],
-        [
-            'reference' => 'program_South Park',
-            'number' => '2',
-            'year' => '1998',
-            'description' => 'Second Season',
-        ],
-        [
-            'reference' => 'program_South Park',
-            'number' => '3',
-            'year' => '1999',
-            'description' => 'Third Season',
-        ],
-        
-    ];
-
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        foreach (self::SEASONS as $key => $seasonValue) {
+        $faker = Factory::create();
+
+        for($i = 0; $i < 50; $i++) {
             $season = new Season();
-            $season->setProgram($this->getReference($seasonValue['reference']));
-            $season->setNumber($seasonValue['number']);
-            $season->setYear($seasonValue['year']);
-            $season->setDescription($seasonValue['description']);
-            $this->addReference('season_' . $seasonValue['number'], $season);
+            $season->setNumber($faker->numberBetween(1, 5));
+            $season->setYear($faker->year());
+            $season->setDescription($faker->realTextBetween($minNbChars = 160, $maxNbChars = 200, $indexSize = 2));
+            $season->setProgram($this->getReference('program_' . $faker->numberBetween(0, 5)));
+            $this->addReference('season_' . $i, $season);
             $manager->persist($season);
         }
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
-          CategoryFixtures::class,
+          ProgramFixtures::class,
         ];
     }
 

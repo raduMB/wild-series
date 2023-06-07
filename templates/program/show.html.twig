@@ -12,6 +12,15 @@
         </div>
     </div>
 
+    {% for season in program.seasons %}
+        <div>
+            <p><span>Saison</span> N°: {{ season.number }} </p>
+            <p><span>Année</span> : {{ season.year }} </p>
+            <p><span>Description</span> : {{ season.description }} </p>
+            <p><a href="{{ path("program_season_show",{ "program": program.id, "season": season.id }) }}"> Voir la saison </a></p>
+        </div>
+    {% endfor %}
+
     <div>
         <a href="{{ path('program_index') }}">Retour à la liste des programmes</a>
     </div>
