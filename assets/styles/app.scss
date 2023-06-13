@@ -6,4 +6,11 @@ $secondary: white;
 body {
     background-color: $primary;
     color: $secondary;
+    padding-top: 60px;
+}
+
+.card {
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
 }

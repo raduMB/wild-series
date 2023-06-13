@@ -15,7 +15,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create();
         
-        for($i = 0; $i < 50; $i++) {
+        for($i = 0; $i < 30; $i++) {
             $program = new Program();
             $program->setTitle($faker->sentence());
             $program->setSynopsis($faker->realText($maxNbChars = 200, $indexSize = 2));

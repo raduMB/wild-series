@@ -12,7 +12,7 @@ class DefaultController extends AbstractController
     public function index(): Response
     {
         return $this->render('/index.html.twig', [
-            'text' => 'Welcome to Wild Series!',
+            'text' => 'Wild Series, baby!',
          ]);
     }
 }

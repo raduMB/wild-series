@@ -1,20 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All programs{% endblock %}
+{% block title %}Toutes les series
+{% endblock %}
 
 {% block body %}
-    <h1>Toutes les programs : </h1>
-    {% for program in programs %}
-        <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-            <p>{{ program.synopsis }}</p>
-            <a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
-        </div>
-    {% else %}
-        Aucune série trouvée.
-    {% endfor %}
 
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
-    </a>
+	
+	<h1 class="text-center my-3"> Toutes les series</h1>
+	{% for program in programs %}
+		<div class="card d-inline-block mx-4 my-4" style="width: 36rem;">
+			<img class="card-img-top" img src="{{ asset('build/images/home.jpg') }}" style="width: 36rem; height: 20rem;" alt="Card image cap">
+			<div class="card-body">
+				<h4 class="card-title">Title:
+					{{ program.title }}</h4>
+				<p class="card-text">
+					<h5>Synopsis:</h5>
+					{{ program.synopsis }}</p>
+			</div>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<button type="button" class="btn btn-outline-success disabled mx-1">Serie n°
+						{{ program.id }}</button>
+					<button type="button" class="btn btn-outline-success disabled mx-1">Catégorie :
+						{{ program.category.name }}</button>
+				</li>
+				<li class="list-group-item d-flex flex-row-reverse">
+					<button type="button" class="btn btn-outline-success disabled mx-1">Pays :
+						{{ program.country }}</button>
+					<button type="button" class="btn btn-outline-success disabled mx-1">Année :
+						{{ program.year }}</button>
+				</li>
+			</ul>
+			<div class="card-body">
+				<a href="{{ path("program_show", { id: program.id }) }}" class="btn btn-warning">Voir la série</a>
+			</div>
+		</div>
+
+
+	{% else %}
+		Aucune série trouvée.
+	{% endfor %}
+
+	<a href="{{ path('app_index') }}" class="btn btn-info my-1">
+		Retour à l'accueil
+	</a>
+
 {% endblock %}
