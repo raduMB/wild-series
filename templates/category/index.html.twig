@@ -1,18 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All categories{% endblock %}
+{% block title %}All categories
+{% endblock %}
 
 {% block body %}
-    <h1>Liste avec toutes les catégories disponibles : </h1>
-    {% for category in categories %}
-        <div>
-            <p>{{ loop.index }} / <a href="{{ path('category_show', {'categoryName': category.name}) }}">{{ category.name }}</a></p>
-        </div>
-    {% else %}
-        Aucune catégorie trouvée.
-    {% endfor %}
+<h1 class="text-center my-3">Liste avec toutes les catégories disponibles :
+</h1>
 
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
-    </a>
+
+{% for category in categories %}
+	<div class="card mx-5" style="width: 40rem;>
+		<div class=" card-body">
+		    <h3 class="card-title">{{ category.name }}</h3>
+		<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+		<div class="card-body">
+			<a href="{{ path("category_show", {'categoryName': category.name}) }}" class="btn btn-warning">Voir la catégorie</a>
+		</div>
+	    </div>
+    </div>
+
+{% endfor %}
+
+<div>
+    <a href="{{ path('app_index') }}" class="btn btn-info my-1">Retour à l'accueil</a>
+</div>
 {% endblock %}

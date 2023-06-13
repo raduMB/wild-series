@@ -1,26 +1,84 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All programs{% endblock %}
+{% block title %}
+    {{ parent() }}- Categorie
+	{{ categories.name }}
+{% endblock %}
 
 {% block body %}
-    <h1>Toutes les programs de la catégorie : {{ category.name}}</h1>
-        <div>
-        {% for program in programs %}
-            <h2>Program :{{ program.title }}</a></h2>
-            <p>{{ program.synopsis }}</p>
-            {# Lien vers la fiche de la série : #}
-            <a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
-        </div>
-    {% else %}
-        Aucune program trouvé.
-    {% endfor %}
+
+<h1 class="text-center my-3">{{ categories.name }}'s Series</h1>
+
+    {% for program in programs %}
+
+	{#
+		<div class="container mt-4">
+			
+			<div class="mt-4">
+				<button type="button" class="btn disabled">Serie n°
+					{{ program.id }}</button>
+				<button type="button" class="btn disabled">Category :
+					{{ program.category.name }}</button>
+				<button type="button" class="btn disabled">Country :
+					{{ program.country }}</button>
+				<button program="button" class="btn disabled">Year :
+					{{ program.year }}</button>
+			</div>
+
+			<div class="card mb-3 d-inline-block mt-4">
+				<h2 class="card-header">{{ program.title }}</h2>
+				<img class="align-self-start m-4 rounded" src="{{program.poster}}" alt="{{ program.title }} poster">
+				<rect width="100%" height="100%" fill="#868e96"></rect>
+				<div class="card-body">
+					<h2>Synopsis</h2>
+					<button type="button" class="btn disabled mt-4">
+						<p class="card-text">{{ program.synopsis }}</p>
+					</button>
+				</div>
+				<div class="card-footer">
+					<a class="btn" href="{{ path("program_show", { id: program.id }) }}">See more details...
+					</a>
+				</div>
+			</div>
+
+			#}
+
+<div class="card d-inline-block mx-4 my-4" style="width: 36rem;">
+			<img class="card-img-top" img src="{{ asset('build/images/home.jpg') }}" style="width: 36rem; height: 20rem;" alt="Card image cap">
+			<div class="card-body">
+				<h4 class="card-title">Title:
+					{{ program.title }}</h4>
+				<p class="card-text">
+					<h5>Synopsis:</h5>
+					{{ program.synopsis }}</p>
+			</div>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<button type="button" class="btn btn-outline-success disabled mx-1">Serie n°
+						{{ program.id }}</button>
+					<button type="button" class="btn btn-outline-success disabled mx-1">Catégorie :
+						{{ program.category.name }}</button>
+				</li>
+				<li class="list-group-item d-flex flex-row-reverse">
+					<button type="button" class="btn btn-outline-success disabled mx-1">Pays :
+						{{ program.country }}</button>
+					<button type="button" class="btn btn-outline-success disabled mx-1">Année :
+						{{ program.year }}</button>
+				</li>
+			</ul>
+			<div class="card-body">
+				<a href="{{ path("program_show", { id: program.id }) }}" class="btn btn-warning">Voir la série</a>
+			</div>
+		</div>
+
+
+		{% endfor %}	
 
         <div>
-            <a href="{{ path('program_index') }}">Retour à la liste des programmes</a>
-        </div>
+		<a href="{{ path('program_index') }}" class="btn btn-info my-1">Retour à la liste des programmes</a>
+	</div>
 
-        <div>
-            <a href="{{ path('category_index') }}">Retour à la liste des catégories</a>
-        </div>
-        
+	<div>
+		<a href="{{ path('category_index') }}" class="btn btn-info my-1">Retour à la liste des catégories</a>
+	</div>
 {% endblock %}

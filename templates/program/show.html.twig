@@ -1,22 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Série #{{ program.id }}{% endblock %}
+{% block title %}Série #{{ programs.id }}
+{% endblock %}
 
 {% block body %}
-    <div class="media">
-        <img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
-        <div class="media-body">
-            <h2 class="mt-0">{{ program.title }}</h2>
-            <p>{{ program.synopsis }}</p>
-            <p>Catégorie : {{ program.category.name }}</p>
-        </div>
-    </div>
 
-    <div>
-        <a href="{{ path('program_index') }}">Retour à la liste des programmes</a>
-    </div>
+	<div class="card mb-3" style="width: 50rem;">
+		<div class="card-body">
+			<h3 class="card-title">Title:
+				{{ programs.title }}</h3>
+			<img class="card-img-top" img src="{{ asset('build/images/home.jpg') }}" style="width: 30rem; height: 20rem;" alt="poster">
+			<p class="card-text">
+				<h5>Synopsis:</h5>
+				{{ programs.synopsis }}</p>
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">
+				<button type="button" class="btn btn-outline-success disabled mx-1">Serie n°
+					{{ programs.id }}</button>
+				<button type="button" class="btn btn-outline-success disabled mx-1">Category :
+					{{ programs.category.name }}</button>
+			</li>
+			<li class="list-group-item d-flex flex-row-reverse">
+				<button type="button" class="btn btn-outline-success disabled mx-1">Country :
+					{{ programs.country }}</button>
+				<button type="button" class="btn btn-outline-success disabled mx-1">Year :
+					{{ programs.year }}</button>
+			</li>
+		</ul>
+		<div class="card-body">
+			{% for season in programs.seasons %}
+				<a href="{{ path('program_season_show', {'programId': programs.id, 'seasonId': season.id}) }}" class="btn btn-warning">Saison{{ season.number }}</a>
+			{% endfor %}
+		</div>
+	</div>
 
-    <div>
-        <a href="{{ path('category_index') }}">Retour à la liste des catégories</a>
-    </div>
+	<div>
+		<a href="{{ path('program_index') }}" class="btn btn-info my-1">Retour à la liste des programmes</a>
+	</div>
+
+	<div>
+		<a href="{{ path('category_index') }}" class="btn btn-info my-1">Retour à la liste des catégories</a>
+	</div>
 {% endblock %}

@@ -12,16 +12,13 @@ class CategoryFixtures extends Fixture
         'Action',
         'Aventure',
         'Animation',
-        'Biographique',
-        'Comedie',
-        'Documentaire',
+        'Comédie',
         'Drame',
         'Fantastique',
-        'Historique',
         'Horreur',
-        'Merde',
+        'Pourquoi Bon Dieu',
         'Policier',
-        'Science-fiction',
+        'Science-Fiction',
     ];
 
     public function load(ObjectManager $manager)
@@ -29,8 +26,8 @@ class CategoryFixtures extends Fixture
         foreach (self::CATEGORIES as $key => $categoryName) {
             $category = new Category();
             $category->setName($categoryName);
-            $manager->persist($category);
             $this->addReference('category_' . $categoryName, $category);
+            $manager->persist($category);
         }
         $manager->flush();
     }

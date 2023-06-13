@@ -7,9 +7,9 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.scss';
-import imagePath from './images/jim-carrey-funny.gif';
+import imagePath from './images/home.jpg';
 
-let html = `<img src="${imagePath}" alt="Jim Carrey">`;
+let html = `<img src="${imagePath}" alt="">`;
 
 // start the Stimulus application
 import './bootstrap';

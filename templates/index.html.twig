@@ -1,8 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bienvenue !{% endblock %}
+{% block title %}Bienvenue !
+{% endblock %}
 
 {% block body %}
-<h1>{{ text }}</h1>
-<img src="{{ asset('build/images/jim-carrey-funny.gif') }}" alt="Jim Carrey"/>
+	<div class="d-flex justify-content-center">
+		<h1>{{ text }}</h1>
+	</div>
+	<div class="d-flex justify-content-center">
+		<img src="{{ asset('build/images/home.jpg') }}" alt="home"/>
+	</div>
 {% endblock %}
