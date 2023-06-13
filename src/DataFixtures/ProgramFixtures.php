@@ -37,5 +37,4 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
           CategoryFixtures::class,
         ];
     }
-
 }

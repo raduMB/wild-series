@@ -2,12 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Season;
+use App\Entity\Episode;
+use App\Entity\Program;
 use App\Repository\SeasonRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 
 #[Route('/program', name: 'program_')]
@@ -25,43 +31,68 @@ class ProgramController extends AbstractController
     }
 
     #[Route('/{id}', requirements: ['page' => '\d+'], name: 'show', methods: ['GET'])]
-    public function show(int $id, ProgramRepository $programRepository): Response
+    public function show(Program $program): Response
     {
-        $programs = $programRepository->find($id);
+        $seasons = $program->getSeasons();
 
-        if (!$programs) {
+        if (!$program) {
             throw $this->createNotFoundException(
-                'Aucune série avec le n° : '.$id.' n\'a pas été trouvée dans la liste.'
+                'Aucune série avec le n° : '.$program->getId().' n\'a pas été trouvée dans la liste.'
             );
         }
 
         return $this->render('program/show.html.twig', [
-            'programs' => $programs,
+            'program' => $program,
+            'seasons' => $seasons,
         ]);
     }
 
     #[Route('/{programId}/seasons/{seasonId}', requirements: ['programId' => '\d+', 'seasonId' => '\d+'], name: 'season_show', methods: ['GET'])]
-    public function showSeason(int $programId, int $seasonId, ProgramRepository $programRepository, SeasonRepository $seasonRepository, EpisodeRepository $episodeRepository): Response
+    public function showSeason(#[MapEntity(mapping: ['programId' => 'id'])] Program $program, #[MapEntity(mapping: ['seasonId' => 'id'])]  Season $season, EpisodeRepository $episodeRepository): Response
     {
-        $program = $programRepository->find($programId);
-        $season = $seasonRepository->find($seasonId);
-        $episodes = $season->getEpisodes();
+        
+        $episodes = $episodeRepository->findBy(['season' => $season]);
 
         if (!$program) {
             throw $this->createNotFoundException(
-                'Aucune série avec le n° : '.$programId.' n\'a pas été trouvée dans la liste des séries.'
+                'Aucune série avec le n° : '.$program->getId().' n\'a pas été trouvée dans la liste des séries.'
             );
         }
 
         if (!$season) {
             throw $this->createNotFoundException(
-                'Aucune saison avec le n° : '.$seasonId.' n\'a pas été trouvée dans la liste des saisons.'
+                'Aucune saison avec le n° : '.$season->getId().' n\'a pas été trouvée dans la liste des saisons.'
             );
         }
         
         return $this->render('program/season_show.html.twig', [
-            'program' => $program, 'season' => $season, 'episodes' => $episodes,
+            'programs' => $program, 'seasons' => $season, 'episodes' => $episodes,
         ]);
     }
 
+    #[Route('/{programId}/seasons/{seasonId}/episodes/{episodeId}', requirements: ['programId' => '\d+', 'seasonId' => '\d+', 'episodeId' => '\d+'], name: 'episode_show', methods: ['GET'])]
+    public function showEpisode(#[MapEntity(mapping: ['programId' => 'id'])] Program $program, #[MapEntity(mapping: ['seasonId' => 'id'])] Season $season, #[MapEntity(mapping: ['episodeId' => 'id'])] Episode $episode): Response
+    {
+        if (!$program) {
+            throw $this->createNotFoundException(
+                'Aucune série avec le n° : '.$program->getId().' n\'a pas été trouvée dans la liste des séries.'
+            );
+        }
+
+        if (!$season) {
+            throw $this->createNotFoundException(
+                'Aucune saison avec le n° : '.$season->getId().' n\'a pas été trouvée dans la liste des saisons.'
+            );
+        }
+
+        if (!$episode) {
+            throw $this->createNotFoundException(
+                'Aucun épisode avec le n° : '.$episode->getId().' n\'a pas été trouvée dans la liste des épisodes.'
+            );
+        }
+        
+        return $this->render('program/episode_show.html.twig', [
+            'programs' => $program, 'seasons' => $season, 'episodes' => $episode,
+        ]);
+    }
 }

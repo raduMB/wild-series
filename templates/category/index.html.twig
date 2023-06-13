@@ -1,27 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All categories
+{% block title %}
+	Toutes les catégories
 {% endblock %}
 
 {% block body %}
-<h1 class="text-center my-3">Liste avec toutes les catégories disponibles :
-</h1>
 
+	<h1 class="text-center my-3">Liste avec toutes les catégories disponibles :</h1>
 
-{% for category in categories %}
-	<div class="card mx-5" style="width: 40rem;>
-		<div class=" card-body">
-		    <h3 class="card-title">{{ category.name }}</h3>
-		<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-		<div class="card-body">
-			<a href="{{ path("category_show", {'categoryName': category.name}) }}" class="btn btn-warning">Voir la catégorie</a>
+	{% for category in categories %}
+		<div class="card mb-3" style="width: 50rem;">
+			<div class=" card-body">
+				<h3 class="card-title text-center">{{ category.name }}</h3>
+				<p class="card-text">....</p>
+				<div class="card-body">
+					<a href="{{ path("category_show", {'categoryName': category.name}) }}" class="btn btn-warning">Voir la catégorie</a>
+				</div>
+			</div>
 		</div>
-	    </div>
-    </div>
+	{% endfor %}
 
-{% endfor %}
+	<div>
+		<a href="{{ path('app_index') }}" class="btn btn-info my-1">Retour à l'accueil</a>
+	</div>
 
-<div>
-    <a href="{{ path('app_index') }}" class="btn btn-info my-1">Retour à l'accueil</a>
-</div>
 {% endblock %}
