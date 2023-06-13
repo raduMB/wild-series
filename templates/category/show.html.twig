@@ -7,42 +7,10 @@
 
 {% block body %}
 
-<h1 class="text-center my-3">{{ categories.name }}'s Series</h1>
+<h1 class="my-3">{{ categories.name }}'s Series</h1>
 
     {% for program in programs %}
-
-	{#
-		<div class="container mt-4">
-			
-			<div class="mt-4">
-				<button type="button" class="btn disabled">Serie n°
-					{{ program.id }}</button>
-				<button type="button" class="btn disabled">Category :
-					{{ program.category.name }}</button>
-				<button type="button" class="btn disabled">Country :
-					{{ program.country }}</button>
-				<button program="button" class="btn disabled">Year :
-					{{ program.year }}</button>
-			</div>
-
-			<div class="card mb-3 d-inline-block mt-4">
-				<h2 class="card-header">{{ program.title }}</h2>
-				<img class="align-self-start m-4 rounded" src="{{program.poster}}" alt="{{ program.title }} poster">
-				<rect width="100%" height="100%" fill="#868e96"></rect>
-				<div class="card-body">
-					<h2>Synopsis</h2>
-					<button type="button" class="btn disabled mt-4">
-						<p class="card-text">{{ program.synopsis }}</p>
-					</button>
-				</div>
-				<div class="card-footer">
-					<a class="btn" href="{{ path("program_show", { id: program.id }) }}">See more details...
-					</a>
-				</div>
-			</div>
-
-			#}
-
+    
 <div class="card d-inline-block mx-4 my-4" style="width: 36rem;">
 			<img class="card-img-top" img src="{{ asset('build/images/home.jpg') }}" style="width: 36rem; height: 20rem;" alt="Card image cap">
 			<div class="card-body">
