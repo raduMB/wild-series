@@ -32,5 +32,4 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
           SeasonFixtures::class,
         ];
     }
-
 }

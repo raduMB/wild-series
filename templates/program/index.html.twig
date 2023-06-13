@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Toutes les series
+{% block title %}
+	Toutes les series
 {% endblock %}
 
 {% block body %}
 
-	
-	<h1 class="text-center my-3"> Toutes les series</h1>
+	<h1 class="text-center my-3">
+		Toutes les series</h1>
+
 	{% for program in programs %}
 		<div class="card d-inline-block mx-4 my-4" style="width: 36rem;">
 			<img class="card-img-top" img src="{{ asset('build/images/home.jpg') }}" style="width: 36rem; height: 20rem;" alt="Card image cap">
@@ -35,8 +37,6 @@
 				<a href="{{ path("program_show", { id: program.id }) }}" class="btn btn-warning">Voir la série</a>
 			</div>
 		</div>
-
-
 	{% else %}
 		Aucune série trouvée.
 	{% endfor %}

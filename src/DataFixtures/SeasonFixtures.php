@@ -33,5 +33,4 @@ class SeasonFixtures extends Fixture implements DependentFixtureInterface
           ProgramFixtures::class,
         ];
     }
-
 }

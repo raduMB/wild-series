@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Episode
+	{{ episodes.number }}
+{% endblock %}
+
+{% block body %}
+
+	<div>
+		<h1 class="text-center my-1">Série:
+			{{ programs.title }}</h1>
+		<h2 class="text-center my-3">Saison:
+			{{ seasons.number }}</h2>
+	</div>
+
+	<div class="card mb-3" style="width: 70rem;">
+		<div class="row g-0">
+			<div class="col-md-4">
+				<img src="{{ asset('build/images/home.jpg') }}" class="img-fluid rounded-start" alt="poster">
+			</div>
+			<div class="col-md-8">
+				<div class="card-body">
+					<h4 class="card-title">Title:
+						{{ episodes.title }}</h4>
+					<h5 class="card-text">Episode:
+						{{ episodes.number }}</h5>
+					<p class="card-text">Synopsis:
+						{{ episodes.synopsis }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<a href="{{ path('program_season_show', {'programId': programs.id, 'seasonId': seasons.id}) }}" class="btn btn-info my-1">Retour à la liste des épisodes</a>
+	</div>
+
+	<div>
+		<a href="{{ path('program_index') }}" class="btn btn-info my-1">Retour à la liste des programmes</a>
+	</div>
+
+	<div>
+		<a href="{{ path('category_index') }}" class="btn btn-info my-1">Retour à la liste des catégories</a>
+	</div>
+
+{% endblock %}

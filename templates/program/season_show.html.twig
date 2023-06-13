@@ -1,13 +1,17 @@
 {% extends 'base.html.twig' %}
-{% block title %}Saison #{{ season.number }}
+
+{% block title %}
+	Saison
+	{{ seasons.number }}
 {% endblock %}
 
 {% block body %}
+
 	<div>
 		<h1 class="text-center my-1">Série:
-			{{ program.title }}</h1>
+			{{ programs.title }}</h1>
 		<h2 class="text-center my-3">Liste des épisodes de la saison
-			{{ season.number }}</h2>
+			{{ seasons.number }}</h2>
 	</div>
 
 	{% for episode in episodes %}
@@ -18,11 +22,14 @@
 				</div>
 				<div class="col-md-8">
 					<div class="card-body">
-						<h4 class="card-title">Title: {{ episode.title }}</h4>
-						<h5 class="card-text">Episode: {{ episode.number }}</h5>
-						<p class="card-text">Synopsis: {{ episode.synopsis }}</p>
+						<h4 class="card-title">Title:
+							{{ episode.title }}</h4>
+						<h5 class="card-text">Episode:
+							{{ episode.number }}</h5>
+						<p class="card-text">Synopsis:
+							{{ episode.synopsis }}</p>
 						<p class="card-text">
-							<a class="btn btn-warning">Voir l'episode</a>
+							<a class="btn btn-warning" href="{{ path('program_episode_show', {'programId': programs.id, 'seasonId': seasons.id, 'episodeId': episode.id}) }}">Voir l'episode</a>
 						</p>
 					</div>
 				</div>

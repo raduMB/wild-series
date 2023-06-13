@@ -16,10 +16,6 @@ class Season
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'seasons')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?program $program = null;
-
     #[ORM\Column]
     private ?int $number = null;
 
@@ -28,6 +24,10 @@ class Season
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
+
+    #[ORM\ManyToOne(inversedBy: 'seasons')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?program $program = null;
 
     #[ORM\OneToMany(mappedBy: 'season', targetEntity: Episode::class)]
     private Collection $episodes;
@@ -40,18 +40,6 @@ class Season
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getProgram(): ?Program
-    {
-        return $this->program;
-    }
-
-    public function setProgram(?Program $program): self
-    {
-        $this->program = $program;
-
-        return $this;
     }
 
     public function getNumber(): ?int
@@ -86,6 +74,18 @@ class Season
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getProgram(): ?Program
+    {
+        return $this->program;
+    }
+
+    public function setProgram(?Program $program): self
+    {
+        $this->program = $program;
 
         return $this;
     }

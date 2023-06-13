@@ -25,15 +25,15 @@ class Program
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $poster = null;
 
-    #[ORM\ManyToOne(inversedBy: 'programs')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Category $category = null;
-
     #[ORM\Column(length: 255)]
     private ?string $country = null;
 
     #[ORM\Column]
     private ?int $year = null;
+
+    #[ORM\ManyToOne(inversedBy: 'programs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
 
     #[ORM\OneToMany(mappedBy: 'program', targetEntity: Season::class)]
     private Collection $seasons;
