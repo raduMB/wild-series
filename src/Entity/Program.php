@@ -23,7 +23,7 @@ class Program
     #[Assert\NotBlank(message: 'Il faut remplir le nom du program')]
     #[Assert\Length(
         max: 255,
-        maxMessage: 'Le nom saisi {{ value }} est trop longue, elle ne devrait pas dépasser {{ limit }} caractères',
+        maxMessage: 'Le nom saisi est trop long, il ne devrait pas dépasser {{ limit }} caractères',
     )]
     private ?string $title = null;
 

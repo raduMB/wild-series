@@ -9,6 +9,9 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ProgramType extends AbstractType
 {
@@ -19,10 +22,11 @@ class ProgramType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Il faut remplir le nom du program'
+                        'message' => 'Il faut remplir le nom du program',
                     ]),
-                    new Lenght([
-                        'message' => 'Le nom saisi {{ value }} est trop longue, elle ne devrait pas dépasser {{ limit }} caractères'
+                    new Assert\Length([
+                        'max' => 255,
+                        'maxMessage' => 'Le nom saisi est trop long, il ne devrait pas dépasser {{ limit }} caractères',
                     ]),
                 ], 
             ])
@@ -30,14 +34,16 @@ class ProgramType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Il faut remplir la section synopsis'
+                        'message' => 'Il faut remplir la section synopsis',
                     ]),
                     new Regex([
-                        'message' => 'On parle de vraies séries ici'
+                        'pattern' => "/plus\s+belle\s+la\s+vie/i",
+                        'match' => false,
+                        'message' => 'On parle de vraies séries ici',
                     ]),
                 ], 
             ])
-            ->add('poster', FileType::class)
+            ->add('poster', TextType::class)
             ->add('country', TextType::class)
             ->add('year', NumberType::class)
             ->add('category', null, ['choice_label' => 'name'])

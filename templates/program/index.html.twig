@@ -1,48 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-	Toutes les series
+{% block title %}Program index
 {% endblock %}
 
 {% block body %}
+	<h1 class="text-center my-3">Séries index</h1>
 
-	<h1 class="text-center my-3">
-		Toutes les series</h1>
+	<a href="{{ path('app_program_new') }}" class="btn btn-primary my-2 mx-4">Nouvelle série</a>
 
-	{% for program in programs %}
-		<div class="card d-inline-block mx-4 my-4" style="width: 36rem;">
-			<img class="card-img-top" img src="{{ asset('build/images/home.jpg') }}" style="width: 36rem; height: 20rem;" alt="Card image cap">
-			<div class="card-body">
-				<h4 class="card-title">Title:
-					{{ program.title }}</h4>
-				<p class="card-text">
-					<h5>Synopsis:</h5>
-					{{ program.synopsis }}</p>
-			</div>
-			<ul class="list-group list-group-flush">
-				<li class="list-group-item">
-					<button type="button" class="btn btn-outline-success disabled mx-1">Serie n°
-						{{ program.id }}</button>
-					<button type="button" class="btn btn-outline-success disabled mx-1">Catégorie :
-						{{ program.category.name }}</button>
-				</li>
-				<li class="list-group-item d-flex flex-row-reverse">
-					<button type="button" class="btn btn-outline-success disabled mx-1">Pays :
-						{{ program.country }}</button>
-					<button type="button" class="btn btn-outline-success disabled mx-1">Année :
-						{{ program.year }}</button>
-				</li>
-			</ul>
-			<div class="card-body">
-				<a href="{{ path("program_show", { id: program.id }) }}" class="btn btn-warning">Voir la série</a>
-			</div>
-		</div>
-	{% else %}
-		Aucune série trouvée.
-	{% endfor %}
-
-	<a href="{{ path('app_index') }}" class="btn btn-info my-2 mx-4">
-		Retour à l'accueil
-	</a>
-
+	<table class="table table-dark table-hover table-borderless">
+		<thead class="text-center">
+			<tr>
+				<th>Id</th>
+				<th>Title</th>
+				<th>Synopsis</th>
+				<th>Poster</th>
+				<th>Country</th>
+				<th>Year</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody class="text-center">
+			{% for program in programs %}
+				<tr>
+					<td>{{ program.id }}</td>
+					<td>{{ program.title }}</td>
+					<td>{{ program.synopsis }}</td>
+					<td>{{ program.poster }}</td>
+					<td>{{ program.country }}</td>
+					<td>{{ program.year }}</td>
+					<td>
+						<a href="{{ path('app_program_show', {'id': program.id}) }}" class="btn btn-warning my-1 mx-1">Voir</a>
+						<a href="{{ path('app_program_edit', {'id': program.id}) }}" class="btn btn-secondary my-1 mx-1">Modifier</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">Pas de série trouvée</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}

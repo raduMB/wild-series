@@ -1,18 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-	Ajouter une nouvelle série
-{% endblock %}
+{% block title %}Nouvelle Série{% endblock %}
 
 {% block body %}
+    <h1>Création nouvelle série</h1>
 
-	<h1 class="text-center my-3">Ajouter une nouvelle série</h1>
+    {{ include('program/_form.html.twig') }}
 
-	<div class="container d-flex justify-content-center align-items-center">
-		{{ form_start(form) }}
-		{{ form_widget(form) }}
-		<button type="submit" class="btn btn-success my-3">Ajouter</button>
-		{{ form_end(form) }}
-	</div>
-
+    <a href="{{ path('app_program_index') }}" class="btn btn-info my-1">Retour à la liste des séries</a>
 {% endblock %}
