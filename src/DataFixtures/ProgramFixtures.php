@@ -2,12 +2,12 @@
 
 namespace App\DataFixtures;
 
-use Faker\Factory;
-use App\Entity\Program;
 use App\DataFixtures\CategoryFixtures;
-use Doctrine\Persistence\ObjectManager;
+use App\Entity\Program;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {

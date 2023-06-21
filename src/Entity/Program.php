@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProgramRepository::class)]
+#[UniqueEntity('title')]
 class Program
 {
     #[ORM\Id]
@@ -17,9 +20,20 @@ class Program
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Il faut remplir le nom du program')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le nom saisi est trop long, il ne devrait pas dépasser {{ limit }} caractères',
+    )]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Il faut remplir la section synopsis')]
+    #[Assert\Regex(
+        pattern: "/plus\s+belle\s+la\s+vie/i",
+        match: false,
+        message: "On parle de vraies séries ici"
+    )]
     private ?string $synopsis = null;
 
     #[ORM\Column(length: 255, nullable: true)]

@@ -2,12 +2,12 @@
 
 namespace App\DataFixtures;
 
-use Faker\Factory;
-use App\Entity\Episode;
 use App\DataFixtures\SeasonFixtures;
-use Doctrine\Persistence\ObjectManager;
+use App\Entity\Episode;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 
 class EpisodeFixtures extends Fixture implements DependentFixtureInterface
 {

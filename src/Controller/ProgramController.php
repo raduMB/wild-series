@@ -2,122 +2,84 @@
 
 namespace App\Controller;
 
-use App\Entity\Season;
 use App\Entity\Episode;
 use App\Entity\Program;
+use App\Entity\Season;
 use App\Form\ProgramType;
-use App\Repository\SeasonRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
+use App\Repository\SeasonRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/program', name: 'program_')]
+#[Route('/program')]
 
 class ProgramController extends AbstractController
 {
-    #[Route('/', name: 'index', methods: ['GET'])]
+    #[Route('/', name: 'app_program_index', methods: ['GET'])]
     public function index(ProgramRepository $programRepository): Response
     {
-        $programs = $programRepository->findAll();
-
         return $this->render('program/index.html.twig', [
-            'programs' => $programs,
+            'programs' => $programRepository->findAll(),
         ]);
     }
 
-    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_program_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProgramRepository $programRepository) : Response
     {
-        // Create a new Program Object
         $program = new Program();
-
-        // Create the form, linked with $program
         $form = $this->createForm(ProgramType::class, $program);
-
-        // Get data from HTTP request
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $programRepository->save($program, true);
 
-            // Redirect to programs list
-            return $this->redirectToRoute('program_index');
+            return $this->redirectToRoute('app_program_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        // Render the form
-        return $this->render('program/new.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('program/new.html.twig', [
+            'program' => $program,
+            'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', requirements: ['page' => '\d+'], name: 'show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_program_show', methods: ['GET'])]
     public function show(Program $program): Response
     {
-        $seasons = $program->getSeasons();
-
-        if (!$program) {
-            throw $this->createNotFoundException(
-                'Aucune série avec le n° : '.$program->getId().' n\'a pas été trouvée dans la liste.'
-            );
-        }
-
         return $this->render('program/show.html.twig', [
             'program' => $program,
-            'seasons' => $seasons,
         ]);
     }
 
-    #[Route('/{programId}/seasons/{seasonId}', requirements: ['programId' => '\d+', 'seasonId' => '\d+'], name: 'season_show', methods: ['GET'])]
-    public function showSeason(#[MapEntity(mapping: ['programId' => 'id'])] Program $program, #[MapEntity(mapping: ['seasonId' => 'id'])]  Season $season, EpisodeRepository $episodeRepository): Response
+    #[Route('/{id}/edit', name: 'app_program_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Program $program, ProgramRepository $programRepository): Response
     {
-        
-        $episodes = $episodeRepository->findBy(['season' => $season]);
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
 
-        if (!$program) {
-            throw $this->createNotFoundException(
-                'Aucune série avec le n° : '.$program->getId().' n\'a pas été trouvée dans la liste des séries.'
-            );
+        if ($form->isSubmitted() && $form->isValid()) {
+            $programRepository->save($program, true);
+
+            return $this->redirectToRoute('app_program_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        if (!$season) {
-            throw $this->createNotFoundException(
-                'Aucune saison avec le n° : '.$season->getId().' n\'a pas été trouvée dans la liste des saisons.'
-            );
-        }
-        
-        return $this->render('program/season_show.html.twig', [
-            'programs' => $program, 'seasons' => $season, 'episodes' => $episodes,
+        return $this->renderForm('program/edit.html.twig', [
+            'program' => $program,
+            'form' => $form,
         ]);
     }
 
-    #[Route('/{programId}/seasons/{seasonId}/episodes/{episodeId}', requirements: ['programId' => '\d+', 'seasonId' => '\d+', 'episodeId' => '\d+'], name: 'episode_show', methods: ['GET'])]
-    public function showEpisode(#[MapEntity(mapping: ['programId' => 'id'])] Program $program, #[MapEntity(mapping: ['seasonId' => 'id'])] Season $season, #[MapEntity(mapping: ['episodeId' => 'id'])] Episode $episode): Response
+    #[Route('/{id}', name: 'app_program_delete', methods: ['POST'])]
+    public function delete(Request $request, Program $program, ProgramRepository $programRepository): Response
     {
-        if (!$program) {
-            throw $this->createNotFoundException(
-                'Aucune série avec le n° : '.$program->getId().' n\'a pas été trouvée dans la liste des séries.'
-            );
+        if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
+            $programRepository->remove($program, true);
         }
 
-        if (!$season) {
-            throw $this->createNotFoundException(
-                'Aucune saison avec le n° : '.$season->getId().' n\'a pas été trouvée dans la liste des saisons.'
-            );
-        }
-
-        if (!$episode) {
-            throw $this->createNotFoundException(
-                'Aucun épisode avec le n° : '.$episode->getId().' n\'a pas été trouvée dans la liste des épisodes.'
-            );
-        }
-        
-        return $this->render('program/episode_show.html.twig', [
-            'programs' => $program, 'seasons' => $season, 'episodes' => $episode,
-        ]);
+        return $this->redirectToRoute('app_program_index', [], Response::HTTP_SEE_OTHER);
     }
 }
