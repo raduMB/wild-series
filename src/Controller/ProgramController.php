@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Actor;
+use App\Entity\Category;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
 use App\Form\ProgramType;
+use App\Repository\ActorRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;

@@ -2,10 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Actor;
 use App\Entity\Category;
+use App\Entity\Episode;
+use App\Entity\Program;
+use App\Entity\Season;
 use App\Form\CategoryType;
+use App\Repository\ActorRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
+use App\Repository\SeasonRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

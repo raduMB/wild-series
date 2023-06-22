@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actor
+{% endblock %}
+
+{% block body %}
+	<h1>Actor/actrice</h1>
+
+	<table class="table table-dark table-hover table-borderless">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ actor.id }}</td>
+			</tr>
+			<tr>
+				<th>Name</th>
+				<td>{{ actor.name }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_actor_edit', {'id': actor.id}) }}" class="btn btn-secondary my-2 mx-4">Modifier</a>
+
+	{{ include('actor/_delete_form.html.twig') }}
+
+	<a href="{{ path('app_actor_index') }}" class="btn btn-info my-2 mx-4">Retour à la liste des acteurs</a>
+{% endblock %}
