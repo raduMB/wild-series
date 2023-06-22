@@ -38,6 +38,8 @@ class ProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $programRepository->save($program, true);
 
+            $this->addFlash('success', 'The new program has been created');
+
             return $this->redirectToRoute('app_program_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -64,6 +66,8 @@ class ProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $programRepository->save($program, true);
 
+            $this->addFlash('success', 'The program has been updated successfully');
+
             return $this->redirectToRoute('app_program_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -78,6 +82,8 @@ class ProgramController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
             $programRepository->remove($program, true);
+
+            $this->addFlash('danger', 'The program has been deleted');
         }
 
         return $this->redirectToRoute('app_program_index', [], Response::HTTP_SEE_OTHER);
