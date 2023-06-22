@@ -1,0 +1,13 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Edit Actor File{% endblock %}
+
+{% block body %}
+    <h1>Editer la fiche d'acteur</h1>
+
+    {{ include('admin/actor/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    {{ include('admin/actor/_delete_form.html.twig') }}
+
+    <a href="{{ path('admin_actor_index') }}" class="btn btn-info my-2 mx-4">Retour à la liste des acteurs</a>
+{% endblock %}

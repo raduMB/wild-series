@@ -1,0 +1,36 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Actor index
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center my-3">Acteurs index</h1>
+
+	<a href="{{ path('admin_actor_new') }}" class="btn btn-primary my-2 mx-4">Nouveau/nouvelle acteur/actrice</a>
+
+	<table class="table table-dark table-hover table-borderless">
+		<thead class="text-center">
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody class="text-center">
+			{% for actor in actors %}
+				<tr>
+					<td>{{ actor.id }}</td>
+					<td>{{ actor.name }}</td>
+					<td>
+						<a href="{{ path('admin_actor_show', {'id': actor.id}) }}" class="btn btn-warning my-1 mx-1">Voir</a>
+						<a href="{{ path('admin_actor_edit', {'id': actor.id}) }}" class="btn btn-secondary my-1 mx-1">Modifier</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">Pas d'acteur/actrice trouvé/e</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

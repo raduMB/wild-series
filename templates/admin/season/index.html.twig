@@ -1,0 +1,40 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Season index
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center my-3">Season index</h1>
+
+	<a href="{{ path('admin_season_new') }}" class="btn btn-primary my-2 mx-4">Nouvelle season</a>
+
+	<table class="table table-dark table-hover table-borderless">
+		<thead class="text-center">
+			<tr>
+				<th>Id</th>
+				<th>Number</th>
+				<th>Year</th>
+				<th>Description</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody class="text-center">
+			{% for season in seasons %}
+				<tr>
+					<td>{{ season.id }}</td>
+					<td>{{ season.number }}</td>
+					<td>{{ season.year }}</td>
+					<td>{{ season.description }}</td>
+					<td>
+						<a href="{{ path('admin_season_show', {'id': season.id}) }}" class="btn btn-warning my-1 mx-1">Voir</a>
+						<a href="{{ path('admin_season_edit', {'id': season.id}) }}" class="btn btn-secondary my-1 mx-1">Modifier</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">Pas de season trouvé</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}
+	Bienvenue !
+{% endblock %}
+
+{% block body %}
+	<div class="d-flex justify-content-center">
+		<h1>{{ text }}</h1>
+	</div>
+	<div class="d-flex justify-content-center">
+		<img src="{{ asset('build/images/home.jpg') }}" alt="home"/>
+	</div>
+{% endblock %}

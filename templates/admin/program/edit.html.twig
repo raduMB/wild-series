@@ -1,0 +1,13 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Edit Program{% endblock %}
+
+{% block body %}
+    <h1>Editer la série</h1>
+
+    {{ include('admin/program/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    {{ include('admin/program/_delete_form.html.twig') }}
+
+    <a href="{{ path('admin_program_index') }}" class="btn btn-info my-2 mx-4">Retour à la liste des séries</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}New Actor{% endblock %}
+
+{% block body %}
+    <h1>Création nouveau/nouvelle acteur/actrice</h1>
+
+    {{ include('admin/actor/_form.html.twig') }}
+
+    <a href="{{ path('admin_actor_index') }}" class="btn btn-info my-1">Retour à la liste des acteurs</a>
+{% endblock %}

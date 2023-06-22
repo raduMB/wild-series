@@ -1,0 +1,11 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouvelle Série{% endblock %}
+
+{% block body %}
+    <h1>Création nouvelle série</h1>
+
+    {{ include('admin/program/_form.html.twig') }}
+
+    <a href="{{ path('admin_program_index') }}" class="btn btn-info my-1">Retour à la liste des séries</a>
+{% endblock %}
