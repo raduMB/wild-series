@@ -1,0 +1,11 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouvelle Season{% endblock %}
+
+{% block body %}
+    <h1>Création nouvelle season</h1>
+
+    {{ include('admin/season/_form.html.twig') }}
+
+    <a href="{{ path('admin_season_index') }}" class="btn btn-info my-1">Retour à la liste des seasons</a>
+{% endblock %}

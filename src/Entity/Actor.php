@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
+use App\Repository\ActorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CategoryRepository::class)]
-class Category
+#[ORM\Entity(repositoryClass: ActorRepository::class)]
+class Actor
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,8 +18,8 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Program::class)]
-    private $programs;
+    #[ORM\ManyToMany(targetEntity: Program::class, inversedBy: 'actors')]
+    private Collection $programs;
 
     public function __construct()
     {
@@ -43,6 +43,9 @@ class Category
         return $this;
     }
 
+    /**
+     * @return Collection<int, Program>
+     */
     public function getPrograms(): Collection
     {
         return $this->programs;
@@ -50,17 +53,17 @@ class Category
 
     public function addProgram(Program $program): self
     {
-        $this->programs[] = $program;
-        $program->setCategory($this);
-        
+        if (!$this->programs->contains($program)) {
+            $this->programs->add($program);
+        }
+
         return $this;
     }
 
     public function removeProgram(Program $program): self
     {
-        $this->programs->removeElement($program); 
-        $program->setCategory(null);
-            
+        $this->programs->removeElement($program);
+
         return $this;
     }
 }

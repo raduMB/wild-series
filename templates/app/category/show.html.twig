@@ -1,0 +1,51 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}
+	Catégorie
+	{{ categories.name }}
+{% endblock %}
+
+{% block body %}
+
+	<h1 class="my-3 text-center">Series dans la catégorie
+		{{ categories.name }}</h1>
+
+	{% for program in programs %}
+		<div class="card d-inline-block mx-4 my-4" style="width: 36rem;">
+			<img class="card-img-top" img src="{{ asset('build/images/home.jpg') }}" style="width: 36rem; height: 20rem;" alt="Card image cap">
+			<div class="card-body">
+				<h4 class="card-title">Title:
+					{{ program.title }}</h4>
+				<p class="card-text">
+					<h5>Synopsis:</h5>
+					{{ program.synopsis }}</p>
+			</div>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<button type="button" class="btn btn-outline-success disabled mx-1">Serie n°
+						{{ program.id }}</button>
+					<button type="button" class="btn btn-outline-success disabled mx-1">Catégorie :
+						{{ program.category.name }}</button>
+				</li>
+				<li class="list-group-item d-flex flex-row-reverse">
+					<button type="button" class="btn btn-outline-success disabled mx-1">Pays :
+						{{ program.country }}</button>
+					<button type="button" class="btn btn-outline-success disabled mx-1">Année :
+						{{ program.year }}</button>
+				</li>
+			</ul>
+			<div class="card-body">
+				<a href="{{ path("app_program_show", { id: program.id }) }}" class="btn btn-warning">Voir la série</a>
+			</div>
+		</div>
+	{% endfor %}
+
+	<div>
+		<a href="{{ path('app_program_index') }}" class="btn btn-info my-1">Retour à la liste des programmes</a>
+	</div>
+
+	<div>
+		<a href="{{ path('app_category_index') }}" class="btn btn-info my-1">Retour à la liste des catégories</a>
+	</div>
+
+{% endblock %}
