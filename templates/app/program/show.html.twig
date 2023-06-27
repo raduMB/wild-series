@@ -34,6 +34,10 @@
 					<a href="{{ path('app_actor_show', {'slug': actor.slug}) }}" class="btn btn-primary mx-1">{{ actor.name }}</a>
 				{% endfor %}
 			</li>
+			<li class="list-group-item">Duration:
+				{{ duration }}
+				min.
+			</li>
 		</ul>
 		<div class="card-body">
 			{% for season in program.seasons %}

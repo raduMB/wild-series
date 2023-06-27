@@ -40,11 +40,12 @@ class AppProgramController extends AbstractController
     public function show(Program $program, ProgramDuration $programDuration): Response
     {
         $seasons = $program->getSeasons();
+        $duration = $programDuration->calculate($program);
 
         return $this->render('app/program/show.html.twig', [
             'program' => $program,
             'seasons' => $seasons,
-            'programDuration' => $programDuration->calculate($program),
+            'duration' => $duration,
         ]);
     }
 }

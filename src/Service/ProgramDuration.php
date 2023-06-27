@@ -6,8 +6,14 @@ use App\Entity\Program;
 
 class ProgramDuration
 {
-    public function calculate (Program $program): string
+    public function calculate(Program $program): int
     {
-        return "coming soon";
+        $duration = 0;
+        foreach ($program->getSeasons() as $season) {
+            foreach ($season->getEpisodes() as $episode) {
+                $duration += $episode->getDuration();
+            }
+        }
+        return $duration;
     }
 }
