@@ -31,13 +31,13 @@
 			</li>
 			<li class="list-group-item">Acteurs:
 				{% for actor in program.actors %}
-					<a href="{{ path('app_actor_show', {id: actor.id}) }}" class="btn btn-primary mx-1">{{ actor.name }}</a>
+					<a href="{{ path('app_actor_show', {'slug': actor.slug}) }}" class="btn btn-primary mx-1">{{ actor.name }}</a>
 				{% endfor %}
 			</li>
 		</ul>
 		<div class="card-body">
 			{% for season in program.seasons %}
-				<a href="{{ path('app_season_show', {'programId': program.id, 'seasonId': season.id}) }}" class="btn btn-warning">Saison{{ season.number }}</a>
+				<a href="{{ path('app_season_show', {'slug': program.slug, 'season': season.id}) }}" class="btn btn-warning">Saison{{ season.number }}</a>
 			{% endfor %}
 		</div>
 	</div>

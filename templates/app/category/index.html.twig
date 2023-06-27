@@ -14,7 +14,7 @@
 				<h3 class="card-title text-center">{{ category.name }}</h3>
 				<p class="card-text">....</p>
 				<div class="card-body">
-					<a href="{{ path("app_category_show", {'categoryName': category.name}) }}" class="btn btn-warning">Voir la catégorie</a>
+					<a href="{{ path('app_category_show', {'slug': category.slug}) }}" class="btn btn-warning">Voir la catégorie</a>
 				</div>
 			</div>
 		</div>

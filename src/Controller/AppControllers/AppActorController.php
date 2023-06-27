@@ -19,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/app/actor')]
 
@@ -34,14 +35,14 @@ class AppActorController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', requirements: ['page' => '\d+'], name: 'app_actor_show', methods: ['GET'])]
+    #[Route('/{slug}', requirements: ['page' => '\d+'], name: 'app_actor_show', methods: ['GET'])]
     public function show(Actor $actor): Response
     {
         $programs = $actor->getPrograms();
 
         if (!$actor) {
             throw $this->createNotFoundException(
-                'Aucune actor avec le nom : '.$actor->getName().' n\'a pas été trouvée dans la liste.'
+                'Aucune actor avec le nom : '.$actor->getName().' n\'a pas été trouvé dans la liste.'
             );
         }
 

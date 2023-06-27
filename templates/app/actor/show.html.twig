@@ -15,10 +15,10 @@
 			<div class="col-md-8">
 				<div class="card-body">
 					<h5 class="card-title">{{ actor.name }}</h5>
-					<p class="card-text">Some info</p>
+					<p class="card-text">You can see him/her in:</p>
 					<div class="card-body">
 						{% for program in actor.programs %}
-							<a href="{{ path('app_program_show', {id: program.id}) }}" class="btn btn-warning my-1">Voir la série
+							<a href="{{ path('app_program_show', {'slug': program.slug}) }}" class="btn btn-warning my-1">
 								{{ program.title }}</a>
 						{% endfor %}
 					</div>

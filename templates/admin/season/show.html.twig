@@ -27,7 +27,7 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('admin_season_edit', {'id': season.id}) }}" class="btn btn-secondary my-2 mx-4">Modifier</a>
+	<a href="{{ path('admin_season_edit', {'slug': season.slug}) }}" class="btn btn-secondary my-2 mx-4">Modifier</a>
 
 	{{ include('admin/season/_delete_form.html.twig') }}
 
