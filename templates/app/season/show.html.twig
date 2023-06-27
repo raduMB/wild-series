@@ -2,16 +2,16 @@
 
 {% block title %}
 	Saison
-	{{ seasons.number }}
+	{{ season.number }}
 {% endblock %}
 
 {% block body %}
 
 	<div>
 		<h1 class="text-center my-1">Série:
-			{{ programs.title }}</h1>
+			{{ program.title }}</h1>
 		<h2 class="text-center my-3">Liste des épisodes de la saison
-			{{ seasons.number }}</h2>
+			{{ season.number }}</h2>
 	</div>
 
 	{% for episode in episodes %}
@@ -29,7 +29,7 @@
 						<p class="card-text">Synopsis:
 							{{ episode.synopsis }}</p>
 						<p class="card-text">
-							<a class="btn btn-warning" href="{{ path('app_episode_show', {'programId': programs.id, 'seasonId': seasons.id, 'episodeId': episode.id}) }}">Voir l'episode</a>
+							<a class="btn btn-warning" href="{{ path('app_episode_show', {'slug': program.slug, 'season': season.id, 'episode': episode.slug}) }}">Voir l'episode</a>
 						</p>
 					</div>
 				</div>

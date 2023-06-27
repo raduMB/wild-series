@@ -19,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/app/category')]
 
@@ -34,21 +35,13 @@ class AppCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{categoryName}', name: 'app_category_show', methods: ['GET'])]
-    public function show(string $categoryName, CategoryRepository $categoryRepository, ProgramRepository $programRepository): Response
+    #[Route('/{slug}', requirements: ['page' => '\d+'], name: 'app_category_show', methods: ['GET'])]
+    public function show(Category $category): Response
     {
-        if (!$categoryRepository->findOneBy(['name' => $categoryName])) 
-        {
-            throw $this->createNotFoundException(
-                'La catégorie' . ' ' . $categoryName . ' ' . 'n\'existe pas'
-            );
-        } else {
-            $categories = $categoryRepository->findOneBy(['name' => $categoryName]);
-            $programs = $programRepository->findBy(['category' => $categories], ['id' => 'DESC'], 3);
-        }
+        $programs = $category->getPrograms();
 
         return $this->render('app/category/show.html.twig', [
-            'categories' => $categories,
+            'category' => $category,
             'programs' => $programs,
         ]);
     }

@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('admin_program_delete', {'id': program.id}) }}" onsubmit="return confirm('Etes-vous sûr/e de vouloir supprimer cette série?');">
-	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ program.id) }}">
+<form method="post" action="{{ path('admin_program_delete', {'slug': program.slug}) }}" onsubmit="return confirm('Etes-vous sûr/e de vouloir supprimer cette série?');">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ program.slug) }}">
 	<button class="btn btn-danger my-2 mx-4">Effacer</button>
 </form>

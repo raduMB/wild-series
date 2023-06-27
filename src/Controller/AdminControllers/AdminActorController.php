@@ -19,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/admin/actor')]
 
@@ -33,15 +34,16 @@ class AdminActorController extends AbstractController
     }
 
     #[Route('/new', name: 'admin_actor_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ActorRepository $actorRepository) : Response
+    public function new(Request $request, ActorRepository $actorRepository, SluggerInterface $slugger) : Response
     {
         $actor = new Actor();
         $form = $this->createForm(ActorType::class, $actor);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugger->slug($actor->getName());
+            $actor->setSlug($slug);
             $actorRepository->save($actor, true);
-
             $this->addFlash('success', 'The new actor file has been created');
 
             return $this->redirectToRoute('admin_actor_index', [], Response::HTTP_SEE_OTHER);
@@ -53,7 +55,7 @@ class AdminActorController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_actor_show', methods: ['GET'])]
+    #[Route('/{slug}', requirements: ['page' => '\d+'], name: 'admin_actor_show', methods: ['GET'])]
     public function show(Actor $actor): Response
     {
         return $this->render('admin/actor/show.html.twig', [
@@ -61,15 +63,16 @@ class AdminActorController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'admin_actor_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Actor $actor, ActorRepository $actorRepository): Response
+    #[Route('/{slug}/edit', name: 'admin_actor_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Actor $actor, ActorRepository $actorRepository, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ActorType::class, $actor);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugger->slug($actor->getName());
+            $actor->setSlug($slug);
             $actorRepository->save($actor, true);
-
             $this->addFlash('success', 'The actor file has been updated successfully');
 
             return $this->redirectToRoute('admin_actor_index', [], Response::HTTP_SEE_OTHER);
@@ -81,10 +84,10 @@ class AdminActorController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_actor_delete', methods: ['POST'])]
-    public function delete(Request $request, Actor $actor, ActorRepository $actorRepository): Response
+    #[Route('/{slug}', name: 'admin_actor_delete', methods: ['POST'])]
+    public function delete(Request $request, Actor $actor, ActorRepository $actorRepository, SluggerInterface $slugger): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$actor->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$actor->getSlug(), $request->request->get('_token'))) {
             $actorRepository->remove($actor, true);
 
             $this->addFlash('danger', 'The actor file has been deleted');

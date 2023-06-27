@@ -22,8 +22,8 @@
 					<td>{{ actor.id }}</td>
 					<td>{{ actor.name }}</td>
 					<td>
-						<a href="{{ path('admin_actor_show', {'id': actor.id}) }}" class="btn btn-warning my-1 mx-1">Voir</a>
-						<a href="{{ path('admin_actor_edit', {'id': actor.id}) }}" class="btn btn-secondary my-1 mx-1">Modifier</a>
+						<a href="{{ path('admin_actor_show', {'slug': actor.slug}) }}" class="btn btn-warning my-1 mx-1">Voir</a>
+						<a href="{{ path('admin_actor_edit', {'slug': actor.slug}) }}" class="btn btn-secondary my-1 mx-1">Modifier</a>
 					</td>
 				</tr>
 			{% else %}

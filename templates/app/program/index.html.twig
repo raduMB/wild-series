@@ -34,7 +34,7 @@
 				</li>
 			</ul>
 			<div class="card-body">
-				<a href="{{ path("app_program_show", { id: program.id }) }}" class="btn btn-warning">Voir la série</a>
+				<a href="{{ path('app_program_show', { 'slug': program.slug }) }}" class="btn btn-warning">Voir la série</a>
 			</div>
 		</div>
 	{% else %}

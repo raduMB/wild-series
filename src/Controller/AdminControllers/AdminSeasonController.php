@@ -19,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/admin/season')]
 
@@ -33,15 +34,16 @@ class AdminSeasonController extends AbstractController
     }
 
     #[Route('/new', name: 'admin_season_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SeasonRepository $seasonRepository): Response
+    public function new(Request $request, SeasonRepository $seasonRepository, SluggerInterface $slugger): Response
     {
         $season = new Season();
         $form = $this->createForm(SeasonType::class, $season);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugger->slug($season->getNumber());
+            $season->setSlug($slug);
             $seasonRepository->save($season, true);
-
             $this->addFlash('success', 'The new season has been created');
 
             return $this->redirectToRoute('admin_season_index', [], Response::HTTP_SEE_OTHER);
@@ -53,7 +55,7 @@ class AdminSeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_season_show', methods: ['GET'])]
+    #[Route('/{slug}', requirements: ['page' => '\d+'], name: 'admin_season_show', methods: ['GET'])]
     public function show(Season $season): Response
     {
         return $this->render('admin/season/show.html.twig', [
@@ -61,15 +63,16 @@ class AdminSeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'admin_season_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Season $season, SeasonRepository $seasonRepository): Response
+    #[Route('/{slug}/edit', name: 'admin_season_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Season $season, SeasonRepository $seasonRepository, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(SeasonType::class, $season);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugger->slug($season->getNumber());
+            $season->setSlug($slug);
             $seasonRepository->save($season, true);
-
             $this->addFlash('success', 'The season has been updated successfully');
 
             return $this->redirectToRoute('admin_season_index', [], Response::HTTP_SEE_OTHER);
@@ -81,10 +84,10 @@ class AdminSeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_season_delete', methods: ['POST'])]
-    public function delete(Request $request, Season $season, SeasonRepository $seasonRepository): Response
+    #[Route('/{slug}', name: 'admin_season_delete', methods: ['POST'])]
+    public function delete(Request $request, Season $season, SeasonRepository $seasonRepository, SluggerInterface $slugger): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$season->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$season->getSlug(), $request->request->get('_token'))) {
             $seasonRepository->remove($season, true);
 
             $this->addFlash('danger', 'The season has been deleted');

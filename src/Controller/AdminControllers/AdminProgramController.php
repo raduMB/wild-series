@@ -13,12 +13,14 @@ use App\Repository\CategoryRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;
+use App\Service\ProgramDuration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/admin/program')]
 
@@ -33,15 +35,16 @@ class AdminProgramController extends AbstractController
     }
 
     #[Route('/new', name: 'admin_program_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProgramRepository $programRepository) : Response
+    public function new(Request $request, ProgramRepository $programRepository, SluggerInterface $slugger) : Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugger->slug($program->getTitle());
+            $program->setSlug($slug);
             $programRepository->save($program, true);
-
             $this->addFlash('success', 'The new program has been created');
 
             return $this->redirectToRoute('admin_program_index', [], Response::HTTP_SEE_OTHER);
@@ -53,23 +56,25 @@ class AdminProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_program_show', methods: ['GET'])]
-    public function show(Program $program): Response
+    #[Route('/{slug}', requirements: ['page' => '\d+'], name: 'admin_program_show', methods: ['GET'])]
+    public function show(Program $program, ProgramDuration $programDuration): Response
     {
         return $this->render('admin/program/show.html.twig', [
             'program' => $program,
+            'programDuration' => $programDuration->calculate($program),
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'admin_program_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Program $program, ProgramRepository $programRepository): Response
+    #[Route('/{slug}/edit', name: 'admin_program_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Program $program, ProgramRepository $programRepository, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugger->slug($program->getTitle());
+            $program->setSlug($slug);
             $programRepository->save($program, true);
-
             $this->addFlash('success', 'The program has been updated successfully');
 
             return $this->redirectToRoute('admin_program_index', [], Response::HTTP_SEE_OTHER);
@@ -81,10 +86,10 @@ class AdminProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_program_delete', methods: ['POST'])]
-    public function delete(Request $request, Program $program, ProgramRepository $programRepository): Response
+    #[Route('/{slug}', name: 'admin_program_delete', methods: ['POST'])]
+    public function delete(Request $request, Program $program, ProgramRepository $programRepository, SluggerInterface $slugger): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$program->getSlug(), $request->request->get('_token'))) {
             $programRepository->remove($program, true);
 
             $this->addFlash('danger', 'The program has been deleted');
