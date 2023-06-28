@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class EpisodeType extends AbstractType
 {
@@ -20,6 +21,11 @@ class EpisodeType extends AbstractType
             ->add('synopsis', TextType::class)
             ->add('duration', NumberType::class)
             ->add('season', null, ['choice_label' => 'number'])
+            ->add('posterFile', VichFileType::class, [
+                'required'      => false,
+                'allow_delete'  => true,
+                'download_uri' => true,
+            ])
         ;
     }
 

@@ -11,7 +11,7 @@
 
 	{% for program in programs %}
 		<div class="card d-inline-block mx-4 my-4" style="width: 36rem;">
-			<img class="card-img-top" img src="{{ asset('build/images/home.jpg') }}" style="width: 36rem; height: 20rem;" alt="Card image cap">
+			<img class="card-img-top" img src="{{ vich_uploader_asset(program) }}" style="width: 36rem; height: 20rem;" alt="Card image cap">
 			<div class="card-body">
 				<h4 class="card-title">Title:
 					{{ program.title }}</h4>

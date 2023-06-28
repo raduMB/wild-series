@@ -10,6 +10,9 @@
 
 	{% for category in categories %}
 		<div class="card mb-3" style="width: 50rem;">
+			<div class="col-md-4">
+				<img src="{{ vich_uploader_asset(category) }}" class="img-fluid rounded-start" alt="Card image cap">
+			</div>
 			<div class=" card-body">
 				<h3 class="card-title text-center">{{ category.name }}</h3>
 				<p class="card-text">....</p>
