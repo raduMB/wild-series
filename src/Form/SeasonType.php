@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class SeasonType extends AbstractType
 {
@@ -19,6 +20,11 @@ class SeasonType extends AbstractType
             ->add('year', NumberType::class)
             ->add('description', TextType::class)
             ->add('program', null, ['choice_label' => 'title'])
+            ->add('posterFile', VichFileType::class, [
+                'required'      => false,
+                'allow_delete'  => true,
+                'download_uri' => true,
+            ])
         ;
     }
 

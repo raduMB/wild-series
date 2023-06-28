@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class ActorType extends AbstractType
 {
@@ -22,7 +23,13 @@ class ActorType extends AbstractType
                 'choice_label' => 'title',
                 'multiple' => true,
                 'expanded' => true,
-            ]);
+            ])
+            ->add('posterFile', VichFileType::class, [
+                'required'      => false,
+                'allow_delete'  => true,
+                'download_uri' => true,
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
