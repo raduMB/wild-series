@@ -19,6 +19,8 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -35,7 +37,7 @@ class AdminProgramController extends AbstractController
     }
 
     #[Route('/new', name: 'admin_program_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProgramRepository $programRepository, SluggerInterface $slugger) : Response
+    public function new(Request $request, MailerInterface $mailer, ProgramRepository $programRepository, SluggerInterface $slugger) : Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -45,6 +47,14 @@ class AdminProgramController extends AbstractController
             $slug = $slugger->slug($program->getTitle());
             $program->setSlug($slug);
             $programRepository->save($program, true);
+            
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to('your_email@example.com')
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->html($this->renderView('admin/program/newProgramEmail.html.twig', ['program' => $program]));
+            $mailer->send($email);
+
             $this->addFlash('success', 'The new program has been created');
 
             return $this->redirectToRoute('admin_program_index', [], Response::HTTP_SEE_OTHER);
