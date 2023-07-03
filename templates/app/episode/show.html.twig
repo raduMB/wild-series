@@ -30,21 +30,36 @@
 					<h5 class="card-text">Duration:
 						{{ episode.duration }}
 						min.</h5>
+					<p class="card-text">
+						<div class="container px-4 text-center">
+							<div class="row gx-5">
+								<div class="col">
+									<h5>Commentaires:
+									</h5>
+									{% for comment in episode.comments %}
+										<div class="p-3">{{ comment.comment }}</div>
+									{% endfor %}
+								</div>
+								<div class="col">
+									<h5>Rating:
+									</h5>
+									{% for comment in episode.comments %}
+										<div class="p-3">{{ comment.rate }}</div>
+									{% endfor %}
+								</div>
+							</div>
+						</p>
+					</p>
 				</div>
+			</p>
+			<div class="card-body">
+				{% if app.user %}
+					<a href="{{path('user_comment_new', {'id' : episode.id })}}" class="btn btn-primary">Ajouter un commentaire</a>
+				{% endif %}
 			</div>
 		</div>
 	</div>
-
-	<div>
-		<a href="{{ path('app_season_show', {'slug': program.slug, 'season': season.id}) }}" class="btn btn-info my-1">Retour à la liste des épisodes</a>
-	</div>
-
-	<div>
-		<a href="{{ path('app_program_index') }}" class="btn btn-info my-1">Retour à la liste des programmes</a>
-	</div>
-
-	<div>
-		<a href="{{ path('app_category_index') }}" class="btn btn-info my-1">Retour à la liste des catégories</a>
-	</div>
-
-{% endblock %}
+</div></div><div>
+<a href="{{ path('app_season_show', {'slug': program.slug, 'season': season.id}) }}" class="btn btn-info my-1">Retour à la liste des épisodes</a></div><div>
+<a href="{{ path('app_program_index') }}" class="btn btn-info my-1">Retour à la liste des programmes</a></div><div>
+<a href="{{ path('app_category_index') }}" class="btn btn-info my-1">Retour à la liste des catégories</a></div>{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}
+	Commentaires - episode
+	{{ episode.number }}
+{% endblock %}
+
+{% block body %}
+
+	<div>
+		<h1 class="text-center my-1">Série:
+			{{ program.title }}</h1>
+		<h2 class="text-center my-3">Saison:
+			{{ season.number }}</h2>
+		<h3 class="text-center my-3">Episode:
+			{{ episode.number }}
+			-
+			{{ episode.title }}</h2>
+	</div>
+
+	<div class="card mb-3" style="width: 70rem;">
+		<div class="row g-0">
+			<div class="col-md-4">
+				<img src="{{ vich_uploader_asset(episode) }}" class="img-fluid rounded-start" alt="poster">
+			</div>
+			<div class="col-md-8">
+				{% for comment in episode.comments %}
+					<div class="card-body">
+						<h4 class="card-title">Title:
+							{{ episode.title }}</h4>
+						<h5 class="card-text">Episode:
+							{{ episode.number }}</h5>
+						<p class="card-text">Synopsis:
+							{{ episode.synopsis }}</p>
+						<h5 class="card-text">Duration:
+							{{ episode.duration }}
+							min.</h5>
+						<h5 class="card-text">Commentaires:
+
+							<a class="btn btn-primary mx-1">{{ comment.comment }}</a>
+						{% endfor %}
+					</h5>
+					<div class="card-body">
+						{% if app.user %}
+							<a href="{{path('user_comment_new', {'id' : episode.id })}}" class="btn btn-primary">Ajouter un commentaire</a>
+						{% endif %}
+						<a href="{{path('user_comment_index')}}" class="btn btn-primary mx-3">Voir les commentaires</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<a href="{{ path('app_season_show', {'slug': program.slug, 'season': season.id}) }}" class="btn btn-info my-1">Retour à la liste des épisodes</a>
+	</div>
+
+	<div>
+		<a href="{{ path('app_program_index') }}" class="btn btn-info my-1">Retour à la liste des programmes</a>
+	</div>
+
+	<div>
+		<a href="{{ path('app_category_index') }}" class="btn btn-info my-1">Retour à la liste des catégories</a>
+	</div>
+{% endblock %}

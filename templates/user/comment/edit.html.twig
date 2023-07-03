@@ -1,0 +1,13 @@
+{% extends 'user/base.html.twig' %}
+
+{% block title %}Edit Comment{% endblock %}
+
+{% block body %}
+    <h1>Editer le comment</h1>
+
+    {{ include('user/comment/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    {{ include('user/comment/_delete_form.html.twig') }}
+
+    <a href="{{ path('user_comment_index') }}" class="btn btn-info my-2 mx-4">Retour à la liste des commentaires</a>
+{% endblock %}
