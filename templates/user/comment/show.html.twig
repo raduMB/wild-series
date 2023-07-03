@@ -1,0 +1,31 @@
+{% extends 'user/base.html.twig' %}
+
+{% block title %}Comment
+{% endblock %}
+
+{% block body %}
+	<h1>Commentaire</h1>
+
+	<table class="table table-dark table-hover table-borderless">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ comment.id }}</td>
+			</tr>
+			<tr>
+				<th>Commentaire</th>
+				<td>{{ comment.comment }}</td>
+			</tr>
+			<tr>
+				<th>Rate</th>
+				<td>{{ comment.rate }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('user_comment_edit', {'id': comment.id}) }}" class="btn btn-secondary my-2 mx-4">Modifier</a>
+
+	{{ include('user/comment/_delete_form.html.twig') }}
+
+	<a href="{{ path('user_comment_index') }}" class="btn btn-info my-2 mx-4">Retour à la liste des commentaires</a>
+</div>{% endblock %}

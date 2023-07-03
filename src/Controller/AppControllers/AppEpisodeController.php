@@ -4,12 +4,14 @@ namespace App\Controller\AppControllers;
 
 use App\Entity\Actor;
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
 use App\Form\EpisodeType;
 use App\Repository\ActorRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;
@@ -30,6 +32,5 @@ class AppEpisodeController extends AbstractController
     public function show(Program $program, Season $season, Episode $episode)
     {
         return $this->render('app/episode/show.html.twig', ['program' => $program, 'season' => $season, 'episode' => $episode]);
-
     }
 }

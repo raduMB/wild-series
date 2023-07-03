@@ -14,14 +14,17 @@ use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 #[Route('/admin/actor')]
+#[IsGranted('ROLE_ADMIN')]
 
 class AdminActorController extends AbstractController
 {
@@ -33,7 +36,7 @@ class AdminActorController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'admin_actor_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'admin_actor_new', methods: ['GET', 'POST'])] 
     public function new(Request $request, ActorRepository $actorRepository, SluggerInterface $slugger) : Response
     {
         $actor = new Actor();

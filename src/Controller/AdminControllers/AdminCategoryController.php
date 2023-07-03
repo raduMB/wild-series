@@ -14,18 +14,21 @@ use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 #[Route('/admin/category')]
+#[IsGranted('ROLE_ADMIN')]
 
 class AdminCategoryController extends AbstractController
 {
-    #[Route('/', name: 'admin_category_index', methods: ['GET'])]
+    #[Route('/', name: 'admin_category_index', methods: ['GET'])] 
     public function index(CategoryRepository $categoryRepository): Response
     {
         return $this->render('admin/category/index.html.twig', [
