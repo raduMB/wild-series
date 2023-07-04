@@ -13,8 +13,16 @@
 		<h1>Login</h1>
 	</div>
 
+	{% if app.user %}
+		<div class="mb-3">
+			You are logged in as
+			{{ app.user.userIdentifier }}
+			<a href="{{ path('security_logout') }}" class="btn btn-danger mx-1">Logout</a>
+		</div>
+	{% endif %}
+
 	<form action="{{ path('security_login') }}" method="post">
-		<div class="container">
+		<div class="container w-25 mt-4">
 			<div class="mb-3">
 				<label for="username" class="form-label">Email address</label>
 				<input type="email" class="form-control" id="username" name="_username" value="{{ last_username }}" placeholder="yourname@email.com" aria-describedby="emailHelp">
@@ -32,6 +40,12 @@
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 			<button type="submit" class="btn btn-success">Login</button>
+
 		</div>
+
 	</form>
+
+	<div class="d-flex justify-content-center">
+		<a href="{{ path('security_forgot_password_request') }}" class="btn btn-warning">Mot de passe oublié</a>
+	</div>
 {% endblock %}
