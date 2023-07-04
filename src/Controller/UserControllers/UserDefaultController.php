@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserDefaultController extends AbstractController
 {
     #[Route('/user', name: 'user_index')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_CONTRIBUTOR')]
     public function index(): Response
     {
         return $this->render('/user/index.html.twig', [
