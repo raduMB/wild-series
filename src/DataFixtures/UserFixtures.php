@@ -21,29 +21,55 @@ class UserFixtures extends Fixture
     {
         // Création d’un utilisateur de type “contributeur” (= auteur)
         $contributor = new User();
-        $contributor->setEmail('contributor@monsite.com');
-        $contributor->setRoles(['ROLE_USER']);
+        $contributor->setEmail('olivia@monsite.com');
+        $contributor->setRoles(['ROLE_CONTRIBUTOR']);
+        $contributor->setUsername('Olivia');
         $hashedPassword = $this->passwordHasher->hashPassword(
             $contributor,
-            'contributorpassword'
+            'olivia'
         );
-
         $contributor->setPassword($hashedPassword);
+        $this->addReference('contributor1', $contributor);
         $manager->persist($contributor);
 
+        $contributor = new User();
+        $contributor->setEmail('emily@monsite.com');
+        $contributor->setRoles(['ROLE_CONTRIBUTOR']);
+        $contributor->setUsername('Emily');
+        $hashedPassword = $this->passwordHasher->hashPassword(
+            $contributor,
+            'emily'
+        );
+        $contributor->setPassword($hashedPassword);
+        $this->addReference('contributor2', $contributor);
+        $manager->persist($contributor);
+        
         // Création d’un utilisateur de type “administrateur”
         $admin = new User();
-        $admin->setEmail('admin@monsite.com');
+        $admin->setEmail('james@monsite.com');
         $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setUsername('James');
         $hashedPassword = $this->passwordHasher->hashPassword(
             $admin,
-            'adminpassword'
+            'james'
         );
-        
         $admin->setPassword($hashedPassword);
+        $this->addReference('admin1', $admin);
         $manager->persist($admin);
 
-        // Sauvegarde des 2 nouveaux utilisateurs :
+        $admin = new User();
+        $admin->setEmail('david@monsite.com');
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setUsername('David');
+        $hashedPassword = $this->passwordHasher->hashPassword(
+            $admin,
+            'david'
+        );
+        $admin->setPassword($hashedPassword);
+        $this->addReference('admin2', $admin);
+        $manager->persist($admin);
+
+        // Sauvegarde les 4 nouveaux utilisateurs :
         $manager->flush();
     }
 }
