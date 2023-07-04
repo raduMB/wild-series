@@ -6,19 +6,23 @@ use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use App\Repository\EpisodeRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[Route('/user/comment')]
+#[IsGranted('ROLE_CONTRIBUTOR')]
 
 class UserCommentController extends AbstractController
 {
     #[Route('/', name: 'user_comment_index', methods: ['GET'])]
-    #[IsGranted('ROLE_USER')]
     public function index(CommentRepository $commentRepository): Response
     {
         return $this->render('user/comment/index.html.twig', [
@@ -27,7 +31,6 @@ class UserCommentController extends AbstractController
     }
 
     #[Route('/new/{id}', name: 'user_comment_new', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_USER')]
     public function new(int $id, Request $request, CommentRepository $commentRepository, EpisodeRepository $episodeRepository, TokenStorageInterface $tokenStorage) : Response
     {
         $comment = new Comment();
@@ -53,7 +56,6 @@ class UserCommentController extends AbstractController
     }
 
     #[Route('/{id}', name: 'user_comment_show', methods: ['GET'])]
-    #[IsGranted('ROLE_USER')]
     public function show(Comment $comment): Response
     {
         return $this->render('user/comment/show.html.twig', [
@@ -64,15 +66,14 @@ class UserCommentController extends AbstractController
     #[Route('/{id}/edit', name: 'user_comment_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
-        // If not the owner or admin, throws a 403 Access Denied exception
-        if (!$this->isGranted('ROLE_USER') && $this->getUser() !== $comment->getOwner()) {     
-            throw $this->createAccessDeniedException('Seul l\'auteur ou l\'admin peut modifier le commentaire');
-        }
-
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($this->getUser() !== $comment->getOwner()) {
+                // If not the owner, throws a 403 Access Denied exception
+                throw $this->createAccessDeniedException('Only the owner can edit the comment!');
+            }
             $commentRepository->save($comment, true);
 
             return $this->redirectToRoute('user_comment_index', [], Response::HTTP_SEE_OTHER);
@@ -87,12 +88,10 @@ class UserCommentController extends AbstractController
     #[Route('/delete/{id}', name: 'user_comment_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
-        // If not the owner and admin, throws a 403 Access Denied exception
-        if (!$this->isGranted('ROLE_USER') && $this->getUser() !== $comment->getOwner()) {
-            
-            throw $this->createAccessDeniedException('Seul l\'auteur ou l\'admin peut supprimer le commentaire');
+        if ($this->getUser() !== $comment->getOwner()) {
+            // If not the owner, throws a 403 Access Denied exception
+            throw $this->createAccessDeniedException('Only the owner can delete the comment!');
         }
-
         $commentRepository->remove($comment, true);
 
         return $this->redirectToRoute('user_comment_index', [], Response::HTTP_SEE_OTHER);

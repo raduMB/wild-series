@@ -44,14 +44,20 @@
 				<a href="{{ path('app_season_show', {'slug': program.slug, 'season': season.id}) }}" class="btn btn-warning">Saison{{ season.number }}</a>
 			{% endfor %}
 		</div>
-	</div>
+		{% if is_granted("ROLE_ADMIN") %}
+			<div class="card-body d-flex flex-row-reverse">
+				<a href="{{ path('admin_program_edit', { 'slug': program.slug} ) }}" class="btn btn-success mx-3">Éditer</a>
+			</div>
+			{%endif%}
 
-	<div>
-		<a href="{{ path('app_program_index') }}" class="btn btn-info my-1">Retour à la liste des programmes</a>
-	</div>
+		</div>
 
-	<div>
-		<a href="{{ path('app_category_index') }}" class="btn btn-info my-1">Retour à la liste des catégories</a>
-	</div>
+		<div>
+			<a href="{{ path('app_program_index') }}" class="btn btn-info my-1">Retour à la liste des programmes</a>
+		</div>
 
-{% endblock %}
+		<div>
+			<a href="{{ path('app_category_index') }}" class="btn btn-info my-1">Retour à la liste des catégories</a>
+		</div>
+
+	{% endblock %}

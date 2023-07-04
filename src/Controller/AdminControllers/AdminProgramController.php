@@ -25,6 +25,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[Route('/admin/program')]
 #[IsGranted('ROLE_ADMIN')]
@@ -49,6 +50,7 @@ class AdminProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugger->slug($program->getTitle());
             $program->setSlug($slug);
+            $program->setOwner($this->getUser());
             $programRepository->save($program, true);
             
             $email = (new Email())
@@ -87,6 +89,10 @@ class AdminProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugger->slug($program->getTitle());
             $program->setSlug($slug);
+            if ($this->getUser() !== $program->getOwner()) {
+                // If not the owner, throws a 403 Access Denied exception
+                throw $this->createAccessDeniedException('Only the owner can edit the program!');
+            }
             $programRepository->save($program, true);
             $this->addFlash('success', 'The program has been updated successfully');
 
@@ -103,6 +109,10 @@ class AdminProgramController extends AbstractController
     public function delete(Request $request, Program $program, ProgramRepository $programRepository, SluggerInterface $slugger): Response
     {
         if ($this->isCsrfTokenValid('delete'.$program->getSlug(), $request->request->get('_token'))) {
+            if ($this->getUser() !== $program->getOwner()) {
+                // If not the owner, throws a 403 Access Denied exception
+                throw $this->createAccessDeniedException('Only the owner can delete the program!');
+            }
             $programRepository->remove($program, true);
 
             $this->addFlash('danger', 'The program has been deleted');
