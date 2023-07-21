@@ -1,10 +1,7 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: #093426;">
 	<div class="container-fluid">
-		<button class="btn btn-primary mx-1 disabled">Wild Series</button>
+		<a class="btn btn-primary mx-1" type="submit" href="/">Wild Series</a>
 		<ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-			<li class="nav-item">
-				<a class="nav-link active" aria-current="page" href="/">Wild Series</a>
-			</li>
 			<li class="nav-item">
 				<a class="nav-link active" aria-current="page" href="/app/program">Programs</a>
 			</li>
@@ -75,6 +72,7 @@
 			<a class="btn btn-success mx-1" type="submit" href="/login">Connexion</a>
 			<a class="btn btn-danger mx-1" type="submit" href="/logout">Déconnexion</a>
 			<a class="btn btn-warning mx-1" type="submit" href="/register">Register</a>
+			<button class="btn btn-dark mx-1" {{ stimulus_action('theme', 'toggleDarkMode') }}>Toggle dark mode</button>
 		</form>
 	</div>
 </nav>
