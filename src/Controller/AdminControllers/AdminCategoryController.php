@@ -37,7 +37,7 @@ class AdminCategoryController extends AbstractController
     }
 
     #[Route('/new', name: 'admin_category_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CategoryRepository $categoryRepository, SluggerInterface $slugger) : Response
+    public function new(Request $request, CategoryRepository $categoryRepository, SluggerInterface $slugger): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);

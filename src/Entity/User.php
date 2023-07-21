@@ -48,6 +48,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        //a voir si utile
+        $this->programs = new ArrayCollection();
     }
 
     public function getId(): ?int

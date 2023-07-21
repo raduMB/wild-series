@@ -41,7 +41,7 @@ class AdminProgramController extends AbstractController
     }
 
     #[Route('/new', name: 'admin_program_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, MailerInterface $mailer, ProgramRepository $programRepository, SluggerInterface $slugger) : Response
+    public function new(Request $request, MailerInterface $mailer, ProgramRepository $programRepository, SluggerInterface $slugger): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);

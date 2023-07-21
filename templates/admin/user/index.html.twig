@@ -1,0 +1,44 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}User index
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center my-3">Utilisateurs index</h1>
+
+	<a href="{{ path('admin_user_new') }}" class="btn btn-primary my-2 mx-4">Nouveau utilisateur</a>
+
+	<table class="table table-dark table-hover table-borderless">
+		<thead class="text-center">
+			<tr>
+				<th>Id</th>
+				<th>Email</th>
+				<th>Roles</th>
+				<th>Password</th>
+				<th>Username</th>
+				<th>Bio</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody class="text-center">
+			{% for user in users %}
+				<tr>
+					<td>{{ user.id }}</td>
+					<td>{{ user.email }}</td>
+					<td>{{ user.roles|join(', ') }}</td>
+					<td>{{ user.password }}</td>
+					<td>{{ user.username }}</td>
+					<td>{{ user.bio }}</td>
+					<td>
+						<a href="{{ path('admin_user_show', {'id': user.id}) }}" class="btn btn-warning my-1 mx-1">Voir</a>
+						<a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-secondary my-1 mx-1">Modifier</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">Pas d'acteur/actrice trouvé/e</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

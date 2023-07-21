@@ -37,7 +37,7 @@ class AdminActorController extends AbstractController
     }
 
     #[Route('/new', name: 'admin_actor_new', methods: ['GET', 'POST'])] 
-    public function new(Request $request, ActorRepository $actorRepository, SluggerInterface $slugger) : Response
+    public function new(Request $request, ActorRepository $actorRepository, SluggerInterface $slugger): Response
     {
         $actor = new Actor();
         $form = $this->createForm(ActorType::class, $actor);
