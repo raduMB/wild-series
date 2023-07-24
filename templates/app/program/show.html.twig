@@ -40,10 +40,8 @@
 			</li>
 		</ul>
 		{% if app.user %}
-			<a href="{{ path('user_watchlist', {id: program.id})}}">
-				<button class="btn btn-outline-secondary">Watchlist :
-					<i class="bi {{app.user.isInWatchlist(program) ? 'bi-heart-fill' : 'bi-heart' }}"></i>
-				</button>
+			<a id="watchlist" class="no-swup" href="{{ path('user_watchlist', {id: program.id})}}">
+				<i class="btn btn-outline-secondary bi {{app.user.isInWatchlist(program) ? 'bi-heart-fill' : 'bi-heart' }}"></i>
 			</a>
 		{% endif %}
 		<div class="card-body">
