@@ -5,46 +5,7 @@
 			<li class="nav-item">
 				<a class="nav-link active" aria-current="page" href="/app/program">Programs</a>
 			</li>
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-					Catégories
-				</a>
-				<ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-					<li>
-						<a class="dropdown-item" href="/app/category">Toutes les catégories</a>
-					</li>
-					<li>
-						<a class="dropdown-item" href="#">Action</a>
-					</li>
-					<li>
-						<a class="dropdown-item" href="#">Aventure</a>
-					</li>
-					<li>
-						<a class="dropdown-item" href="#">Animation</a>
-					</li>
-					<li>
-						<a class="dropdown-item" href="#">Comédie</a>
-					</li>
-					<li>
-						<a class="dropdown-item" href="#">Drame</a>
-					</li>
-					<li>
-						<a class="dropdown-item" href="#">Fantastique</a>
-					</li>
-					<li>
-						<a class="dropdown-item" href="#">Horreur</a>
-					</li>
-					<li>
-						<a class="dropdown-item" href="#">Pourquoi Bon Dieu</a>
-					</li>
-					<li>
-						<a class="dropdown-item" href="#">Policier</a>
-					</li>
-					<li>
-						<a class="dropdown-item" href="#">Science-fiction</a>
-					</li>
-				</ul>
-			</li>
+			{{ component('navbar') }}
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" data-bs-toggle="dropdown" aria-expanded="false">
 					Acteurs
@@ -67,6 +28,7 @@
 					</li>
 				</ul>
 			</li>
+			<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Derniers episodes</button>
 		</ul>
 		<form class="d-flex">
 			<a class="btn btn-success mx-1" type="submit" href="/login">Connexion</a>

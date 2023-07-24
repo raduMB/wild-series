@@ -1,0 +1,22 @@
+<div{{attributes}}>
+	<div class="card">
+		<h4 class="m-4">Derniers Episodes</h4>
+		<div class="d-flex justify-content-around flex-wrap">
+			{% for episode in this.episodes %}
+				<div class="card m-2" style="width: 18rem;">
+					<div class="card-header">
+						{{ episode.title }}
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">{{ episode.season.program.title }}</h5>
+						<p class="card-text">Saison :
+							{{ episode.season.number }}</p>
+						<p class="card-text">Episode :
+							{{ episode.number }}</p>
+						<a class="btn btn-warning" href="{{ path('app_episode_show', {'slug': episode.season.program.slug, 'season': episode.season.id, 'episode': episode.slug}) }}">Voir l'episode</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
