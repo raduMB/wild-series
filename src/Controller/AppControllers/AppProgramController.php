@@ -8,6 +8,7 @@ use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
 use App\Form\ProgramType;
+use App\Form\SearchProgramType;
 use App\Repository\ActorRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\EpisodeRepository;
@@ -26,13 +27,22 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppProgramController extends AbstractController
 {
-    #[Route('/', name: 'app_program_index', methods: ['GET'])]
-    public function index(ProgramRepository $programRepository): Response
+    #[Route('/', name: 'app_program_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, ProgramRepository $programRepository): Response
     {
-        $programs = $programRepository->findAll();
+        $form = $this->createForm(SearchProgramType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->getData()['search'];
+            $programs = $programRepository->findLikeName($form->getData()['search']);
+        } else {
+            $programs = $programRepository->findAll();
+        }
 
         return $this->render('app/program/index.html.twig', [
             'programs' => $programs,
+            'form' => $form,
         ]);
     }
 

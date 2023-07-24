@@ -4,6 +4,13 @@
 {% endblock %}
 
 {% block body %}
+	<h4>Rechercher une série</h4>
+
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	<button>Search</button>
+	{{ form_end(form) }}
+
 	<h1 class="text-center my-3">Séries index</h1>
 
 	<a href="{{ path('admin_program_new') }}" class="btn btn-primary my-2 mx-4">Nouvelle série</a>
