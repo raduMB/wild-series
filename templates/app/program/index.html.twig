@@ -5,6 +5,12 @@
 {% endblock %}
 
 {% block body %}
+	<h4>Rechercher une série</h4>
+
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	<button>Search</button>
+	{{ form_end(form) }}
 
 	<h1 class="text-center my-3">
 		Toutes les series</h1>

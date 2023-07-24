@@ -8,6 +8,7 @@ use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
 use App\Form\ProgramType;
+use App\Form\SearchProgramType;
 use App\Repository\ActorRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\EpisodeRepository;
@@ -16,6 +17,7 @@ use App\Repository\SeasonRepository;
 use App\Service\ProgramDuration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,11 +34,22 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AdminProgramController extends AbstractController
 {
-    #[Route('/', name: 'admin_program_index', methods: ['GET'])]
-    public function index(ProgramRepository $programRepository): Response
+    #[Route('/', name: 'admin_program_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, ProgramRepository $programRepository): Response
     {
+        $form = $this->createForm(SearchProgramType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->getData()['search'];
+            $programs = $programRepository->findLikeName($form->getData()['search']);
+        } else {
+            $programs = $programRepository->findAll();
+        }
+
         return $this->render('admin/program/index.html.twig', [
-            'programs' => $programRepository->findAll(),
+            'programs' => $programs,
+            'form' => $form,
         ]);
     }
 
