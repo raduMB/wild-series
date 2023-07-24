@@ -13,3 +13,6 @@ let html = `<img src="${imagePath}" alt="">`;
 
 // start the Stimulus application
 import './bootstrap';
+
+// import bootstrap icons
+import "bootstrap-icons/font/bootstrap-icons.css";

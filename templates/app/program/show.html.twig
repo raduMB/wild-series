@@ -39,6 +39,13 @@
 				min.
 			</li>
 		</ul>
+		{% if app.user %}
+			<a href="{{ path('user_watchlist', {id: program.id})}}">
+				<button class="btn btn-outline-secondary">Watchlist :
+					<i class="bi {{app.user.isInWatchlist(program) ? 'bi-heart-fill' : 'bi-heart' }}"></i>
+				</button>
+			</a>
+		{% endif %}
 		<div class="card-body">
 			{% for season in program.seasons %}
 				<a href="{{ path('app_season_show', {'slug': program.slug, 'season': season.id}) }}" class="btn btn-warning">Saison{{ season.number }}</a>
@@ -49,7 +56,6 @@
 				<a href="{{ path('admin_program_edit', { 'slug': program.slug} ) }}" class="btn btn-success mx-3">Éditer</a>
 			</div>
 			{%endif%}
-
 		</div>
 
 		<div>
